@@ -165,7 +165,7 @@ export class AppComponent {
                   } else if(value == GuessType.WRONG_POSITION) {
                     button!.style.background = 'rgb(196, 196, 118)'
                   } else if(value == GuessType.INCORRECT) {
-                    button!.style.background = 'rgb(199, 128, 128)'
+                    button!.style.background = 'gray'
                     
                   }
                 })

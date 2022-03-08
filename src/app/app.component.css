@@ -102,12 +102,10 @@
 }
 
 .INCORRECT {
-    background: rgb(199, 128, 128);
+    background: gray;
 }
 
-.EMPTY {
-    border: 1px solid gray;
-}
+
 
 #keyboardMiddleRow {
     margin-left: 5px;
