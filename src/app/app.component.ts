@@ -153,7 +153,7 @@ export class AppComponent {
 
   guess() {
     if (this.solved) {
-      this.presentResultDialog()
+      this.presentResultDialog(true)
     } else if (this.currentGuess.length < 6) {
       const message = 'Guess must be 6 letters long'
       this.openDialog(message)
@@ -181,7 +181,12 @@ export class AppComponent {
               })
             }
             if (this.currentGuess == correctWord) {
-              this.presentResultDialog()
+              this.presentResultDialog(true)
+              this.solved = true
+            }
+
+            if(this.guesses.length == 6) {
+              this.presentResultDialog(false)
               this.solved = true
             }
             this.currentGuess = ''
@@ -204,12 +209,13 @@ export class AppComponent {
     }
   }
 
-  presentResultDialog() {
+  presentResultDialog(solved: boolean) {
     if (this.dialog.openDialogs.length == 0) {
       console.log(this.guesses)
       const dialogRef = this.dialog.open(ResultDialogComponent, {
         data: {
-          guesses: this.guesses
+          guesses: this.guesses,
+          solved: solved
         }
       })
     }
