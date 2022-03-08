@@ -34,14 +34,20 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 
       ]))
       ),
-      transition('true => false',
-      animate('5s', keyframes([
-        style({ border: "1px solid black", offset: 0 }),
-        style({ border: "2px solid black", offset: 0 }),
-        style({ border: "3px solid black", offset: 0 }),
-        style({ border: "1px solid black", offset: 0 }),
+    ]),
+
+    trigger('flip', [
+      state('true', style({})),
+      state('false', style({})),
+      transition('false => true', 
+      animate('500ms', keyframes([
+          style({ transform: "rotateX(180deg)", offset: 0}),
+          style({ transform: "rotateX(0deg)", offset: 1})
+
 
       ])))
+
+      
     ])
 
   ]
@@ -171,6 +177,8 @@ export class AppComponent {
                 })
               }
               this.currentGuess = ''
+            } else { // correct word, display a dialog with ability to copy the emojis
+
             }
           })
         } else {

@@ -7,276 +7,240 @@
   </div>
   <div id="game">
     <div id="guess1" class="tileRow">
-      <div [@expand]="guesses.length == 0 && currentGuess.charAt(0) != ''"  [ngClass]="{
-        'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'CORRECT',
-        'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
-        'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-        
-      }"
-        class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(0).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 0 && currentGuess.charAt(1) != ''"  [ngClass]="{
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 1" [ngClass]="{
+          'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'CORRECT',
+          'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
+          'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(0)?.toString() == 'INCORRECT'
+          }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(0).toUpperCase() :
+        guesses.length == 0 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 1" [ngClass]="{
         'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(1).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 0 && currentGuess.charAt(2) != ''"  [ngClass]="{
+        guesses.length == 0 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 1" [ngClass]="{
         'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(2).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 0 && currentGuess.charAt(3) != ''"  [ngClass]="{
+        guesses.length == 0 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 1" [ngClass]="{
         'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(3).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 0 && currentGuess.charAt(4) != ''"  [ngClass]="{
+        guesses.length == 0 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 1" [ngClass]="{
         'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(4).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-        <div [@expand]="guesses.length == 0 && currentGuess.charAt(5) != ''"  [ngClass]="{
+        guesses.length == 0 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 0 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 1" [ngClass]="{
           'CORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[0] != undefined && guesses[0].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[0] != undefined && guesses[0].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[0] != undefined ? guesses[0].getWord().charAt(5).toUpperCase() :
-        guesses.length == 0  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 0 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
-  
+
     <div id="guess2" class="tileRow">
-      <div [@expand]="guesses.length == 1 && currentGuess.charAt(0) != ''" [ngClass]="{
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 2"  [ngClass]="{
         'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(0)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-      }"
-        class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(0).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 1 && currentGuess.charAt(1) != ''"
-      [ngClass]="{
+      }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(0).toUpperCase() :
+        guesses.length == 1 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 2" [ngClass]="{
         'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(1).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 1 && currentGuess.charAt(2) != ''"
-      [ngClass]="{
+        guesses.length == 1 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 2" [ngClass]="{
         'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(2).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 1 && currentGuess.charAt(3) != ''"
-      [ngClass]="{
+        guesses.length == 1 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 2" [ngClass]="{
         'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(3).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 1 && currentGuess.charAt(4) != ''"
-      [ngClass]="{
+        guesses.length == 1 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 2" [ngClass]="{
         'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(4).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-        <div [@expand]="guesses.length == 1 && currentGuess.charAt(5) != ''"
-        [ngClass]="{
+        guesses.length == 1 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 1 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 2" [ngClass]="{
           'CORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[1] != undefined && guesses[1].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[1] != undefined && guesses[1].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[1] != undefined ? guesses[1].getWord().charAt(5).toUpperCase() :
-        guesses.length == 1  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 1 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
-  
+
     <div id="guess3" class="tileRow">
-      <div [@expand]="guesses.length == 2 && currentGuess.charAt(0) != ''"
-      [ngClass]="{
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 3" [ngClass]="{
         'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(0)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-      }"
-        class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(0).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 2 && currentGuess.charAt(1) != ''"
-      [ngClass]="{
+      }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(0).toUpperCase() :
+        guesses.length == 2 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 3" [ngClass]="{
         'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(1).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 2 && currentGuess.charAt(2) != ''"
-      [ngClass]="{
+        guesses.length == 2 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 3" [ngClass]="{
         'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(2).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 2 && currentGuess.charAt(3) != ''"
-      [ngClass]="{
+        guesses.length == 2 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 3" [ngClass]="{
         'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(3).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 2 && currentGuess.charAt(4) != ''"
-      [ngClass]="{
+        guesses.length == 2 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 3" [ngClass]="{
         'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(4).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-        <div [@expand]="guesses.length == 2 && currentGuess.charAt(5) != ''"
-        [ngClass]="{
+        guesses.length == 2 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 2 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 3" [ngClass]="{
           'CORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[2] != undefined && guesses[2].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[2] != undefined && guesses[2].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[2] != undefined ? guesses[2].getWord().charAt(5).toUpperCase() :
-        guesses.length == 2  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 2 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
-  
+
     <div id="guess4" class="tileRow">
-      <div [@expand]="guesses.length == 3 && currentGuess.charAt(0) != ''"
-      [ngClass]="{
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 4" [ngClass]="{
         'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(0)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-      }"
-        class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(0).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 3 && currentGuess.charAt(1) != ''"
-      [ngClass]="{
+      }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(0).toUpperCase() :
+        guesses.length == 3 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 4" [ngClass]="{
         'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(1).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 3 && currentGuess.charAt(2) != ''"
-      [ngClass]="{
+        guesses.length == 3 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 4" [ngClass]="{
         'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(2).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 3 && currentGuess.charAt(3) != ''"
-      [ngClass]="{
+        guesses.length == 3 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 4" [ngClass]="{
         'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(3).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 3 && currentGuess.charAt(4) != ''"
-      [ngClass]="{
+        guesses.length == 3 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 4" [ngClass]="{
         'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(4).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-        <div [@expand]="guesses.length == 3 && currentGuess.charAt(5) != ''"
-        [ngClass]="{
+        guesses.length == 3 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 3 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 4" [ngClass]="{
           'CORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[3] != undefined && guesses[3].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[3] != undefined && guesses[3].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[3] != undefined ? guesses[3].getWord().charAt(5).toUpperCase() :
-        guesses.length == 3  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 3 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
-  
+
     <div id="guess5" class="tileRow">
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(0) != ''"
-      [ngClass]="{
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 5" [ngClass]="{
         'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(0)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-      }"
-        class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(0).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(1) != ''"
-      [ngClass]="{
+      }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(0).toUpperCase() :
+        guesses.length == 4 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 5" [ngClass]="{
         'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(1).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(2) != ''"
-      [ngClass]="{
+        guesses.length == 4 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 5" [ngClass]="{
         'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(2).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(3) != ''"
-      [ngClass]="{
+        guesses.length == 4 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 5" [ngClass]="{
         'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(3).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(4) != ''"
-      [ngClass]="{
+        guesses.length == 4 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 5" [ngClass]="{
         'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(4).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 4 && currentGuess.charAt(5) != ''"
-      [ngClass]="{
+        guesses.length == 4 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 4 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 5" [ngClass]="{
           'CORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[4] != undefined && guesses[4].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[4] != undefined && guesses[4].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[4] != undefined ? guesses[4].getWord().charAt(5).toUpperCase() :
-        guesses.length == 4  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 4 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
-  
+
     <div id="guess6" class="tileRow">
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(0) != ''"
-      [ngClass]="{
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(0) != ''" [@flip]="guesses.length == 6" [ngClass]="{
         'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(0)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(0)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(0)?.toString() == 'INCORRECT'
-      }"
-        class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(0).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(1) != ''"
-      [ngClass]="{
+      }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(0).toUpperCase() :
+        guesses.length == 5 ? currentGuess.charAt(0).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(1) != ''" [@flip]="guesses.length == 6" [ngClass]="{
         'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(1)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(1)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(1)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(1).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(2) != ''"
-      [ngClass]="{
+        guesses.length == 5 ? currentGuess.charAt(1).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(2) != ''" [@flip]="guesses.length == 6" [ngClass]="{
         'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(2)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(2)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(2)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(2).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(3) != ''"
-      [ngClass]="{
+        guesses.length == 5 ? currentGuess.charAt(2).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(3) != ''" [@flip]="guesses.length == 6" [ngClass]="{
         'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(3)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(3)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(3)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(3).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(4) != ''"
-      [ngClass]="{
+        guesses.length == 5 ? currentGuess.charAt(3).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(4) != ''" [@flip]="guesses.length == 6" [ngClass]="{
         'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(4)?.toString() == 'CORRECT',
         'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(4)?.toString() == 'WRONG_POSITION',
         'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(4)?.toString() == 'INCORRECT'
       }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(4).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
-      <div [@expand]="guesses.length == 5 && currentGuess.charAt(5) != ''"
-      [ngClass]="{
+        guesses.length == 5 ? currentGuess.charAt(4).toUpperCase() : ''}}</div>
+      <div [@expand]="guesses.length == 5 && currentGuess.charAt(5) != ''" [@flip]="guesses.length == 6" [ngClass]="{
           'CORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(5)?.toString() == 'CORRECT',
           'WRONG_POSITION': guesses[5] != undefined && guesses[5].getGuessTypes().get(5)?.toString() == 'WRONG_POSITION',
           'INCORRECT': guesses[5] != undefined && guesses[5].getGuessTypes().get(5)?.toString() == 'INCORRECT'
         }" class="tile">{{guesses[5] != undefined ? guesses[5].getWord().charAt(5).toUpperCase() :
-        guesses.length == 5  ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
+        guesses.length == 5 ? currentGuess.charAt(5).toUpperCase() : ''}}</div>
     </div>
   </div>
-  
+
   <div id="keyboard">
     <div class="row">
       <button id="q" (click)="onKeyPress('q')">Q</button>
@@ -290,7 +254,7 @@
       <button id="o" (click)="onKeyPress('o')">O</button>
       <button id="p" (click)="onKeyPress('p')">P</button>
     </div>
-  
+
     <div id="keyboardMiddleRow" class="row">
       <button id="a" (click)="onKeyPress('a')">A</button>
       <button id="s" (click)="onKeyPress('s')">S</button>
@@ -302,9 +266,11 @@
       <button id="k" (click)="onKeyPress('k')">K</button>
       <button id="l" (click)="onKeyPress('l')">L</button>
     </div>
-  
+
     <div class="row">
-      <button id="enter" (click)="guess()"><mat-icon>check_circle</mat-icon></button>
+      <button id="enter" (click)="guess()">
+        <mat-icon>check_circle</mat-icon>
+      </button>
       <button id="z" (click)="onKeyPress('z')">Z</button>
       <button id="x" (click)="onKeyPress('x')">X</button>
       <button id="c" (click)="onKeyPress('c')">C</button>
@@ -312,7 +278,9 @@
       <button id="b" (click)="onKeyPress('b')">B</button>
       <button id="n" (click)="onKeyPress('n')">N</button>
       <button id="m" (click)="onKeyPress('m')">M</button>
-      <button id="del" (click)="deleteLetter()"><mat-icon>backspace</mat-icon></button>
+      <button id="del" (click)="deleteLetter()">
+        <mat-icon>backspace</mat-icon>
+      </button>
     </div>
   </div>
 </div>
