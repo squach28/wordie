@@ -5,18 +5,21 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
+import { ResultDialogComponent } from './result-dialog/result-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PopUpComponent,
-    HelpDialogComponent
+    HelpDialogComponent,
+    ResultDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { HelpDialogComponent } from './help-dialog/help-dialog.component';
     MatIconModule,
     MatDialogModule,
     MatSlideToggleModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ClipboardModule
 
   ],
   providers: [],

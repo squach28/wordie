@@ -3,7 +3,6 @@ export enum GuessType {
     WRONG_POSITION = "WRONG_POSITION",
     INCORRECT = "INCORRECT",
     UNKNOWN = "UNKNOWN"
-    
   }
 
 export class Guess {
