@@ -4,6 +4,7 @@
     height: 100%;
     flex-direction: column;
     margin: auto;
+    touch-action: manipulation;
 }
 
 #header {
@@ -15,11 +16,22 @@
     margin-right: 15px;
 }
 
+#headerTitle {
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
 #options {
     display: flex;
     gap: 20px;
     margin-left: 15px;
     margin-right: 15px;
+}
+
+mat-icon {
+    cursor: pointer;
 }
 
 #game {
@@ -104,8 +116,6 @@
 .INCORRECT {
     background: gray;
 }
-
-
 
 #keyboardMiddleRow {
     margin-left: 5px;
