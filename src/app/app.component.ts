@@ -6,6 +6,13 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { ResultDialogComponent } from './result-dialog/result-dialog.component';
+import { GameState } from './game-state.model';
+
+export enum GameStatus {
+  WIN,
+  IN_PROGRESS,
+  LOSE
+}
 
 @Component({
   selector: 'app-root',
@@ -60,9 +67,66 @@ export class AppComponent {
   guesses: Guess[] = []
   dialogRef?: MatDialog
   solved = false
+  gameState?: GameState
 
   constructor(private wordieService: WordieService, public dialog: MatDialog) {
 
+  }
+  ngOnInit(): void {
+    if(localStorage.getItem('gameState') != null) {
+      let previousState = JSON.parse(localStorage.getItem('gameState')!)
+      var gameState = new GameState()
+      for(let i = 0; i < previousState.guesses.length; i++) {
+        const guess = previousState.guesses[i]
+        const guessTypes = previousState.gameGuessTypes[i]
+        gameState.addGuess(guess)
+        gameState.addGameGuessType(guessTypes)
+      }
+      
+      for(let i = 0; i < gameState.getGuesses().length; i++) {
+        const word = gameState.getGuesses()[i]
+        const guessTypes = gameState.getGuessTypes()[i]
+        const mapping = new Map<number, GuessType>()
+        for(let i = 0; i < guessTypes.length; i++) {
+          const index = guessTypes[i][0]
+          const previousGuessType = guessTypes[i][1]
+          var guessType = GuessType.UNKNOWN
+          switch(previousGuessType) {
+            case "CORRECT":
+              guessType = GuessType.CORRECT
+              break
+            case "WRONG_POSITION":
+              guessType = GuessType.WRONG_POSITION
+              break
+            case "INCORRECT":
+              guessType = GuessType.INCORRECT
+              break
+            
+          }
+          mapping.set(index, guessType)
+        }
+        const guess = new Guess(word, mapping)
+        this.guesses.push(guess)
+      }
+
+      for (let guess of this.guesses) {
+        let guessTypes = guess.getGuessTypes()
+        let word = guess.getWord()
+        guessTypes.forEach((value: GuessType, key: number) => {
+          let button = document.getElementById(word.charAt(key))
+          if (value == GuessType.CORRECT) {
+            button!.style.background = 'rgb(117, 187, 117)'
+          } else if (value == GuessType.WRONG_POSITION) {
+            button!.style.background = 'rgb(196, 196, 118)'
+          } else if (value == GuessType.INCORRECT) {
+            button!.style.background = 'gray'
+          }
+        })
+      }
+      
+    } else {
+
+    }
   }
 
   // listens for keyboard strokes if user is on computer
@@ -89,7 +153,6 @@ export class AppComponent {
       return
     } else {
       this.currentGuess += char.toLowerCase()
-      console.log(this.guesses)
     }
 
   }
@@ -189,6 +252,17 @@ export class AppComponent {
               this.presentResultDialog(false)
               this.solved = true
             }
+            let gameState = new GameState()
+
+            for(let guess of this.guesses) {
+              const word = guess.getWord()
+              const guessTypes = guess.getGuessTypes()
+              gameState.addGuess(word)
+              gameState.addGameGuessType(Array.from(guessTypes))
+              
+            }
+    
+            localStorage.setItem('gameState', JSON.stringify(gameState)) 
             this.currentGuess = ''
           })
         } else {
@@ -211,7 +285,6 @@ export class AppComponent {
 
   presentResultDialog(solved: boolean) {
     if (this.dialog.openDialogs.length == 0) {
-      console.log(this.guesses)
       const dialogRef = this.dialog.open(ResultDialogComponent, {
         data: {
           guesses: this.guesses,
