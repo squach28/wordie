@@ -1,0 +1,23 @@
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
+}
+
+#result {
+    white-space: pre-wrap;
+    font-weight: bold;
+}
+
+#copyButton {
+    font-weight: bold;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: rgb(96, 172, 96);
+    padding: 7px;
+}

@@ -7,6 +7,8 @@ import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { ResultDialogComponent } from './result-dialog/result-dialog.component';
 import { GameState, GameStatus } from './game-state.model';
+import { WinGameDialogComponent } from './win-game-dialog/win-game-dialog.component';
+import { LoseGameDialogComponent } from './lose-game-dialog/lose-game-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -67,6 +69,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    console.log(this.gameState.getGameStatus())
     let date = new Date()
     const today = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`
     if (localStorage.getItem('gameState') != null) { // check if the user already started a game and local storage has info
@@ -77,6 +80,8 @@ export class AppComponent {
         // set the properties of game state
         this.gameState.setSolution(previousState.solution)
         this.gameState.setGameStatus(previousState.gameStatus)
+        console.log(previousState.gameStatus)
+        console.log(this.gameState.getGameStatus())
         for (let i = 0; i < previousState.guesses.length; i++) {
           const guess = previousState.guesses[i]
           const guessTypes = previousState.gameGuessTypes[i]
@@ -118,7 +123,10 @@ export class AppComponent {
   // listens for keyboard strokes if user is on computer
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.key == 'Backspace') {
+    console.log(this.gameState.getGameStatus())
+    if(this.gameState.getGameStatus() == GameStatus.WIN || this.gameState.getGameStatus() == GameStatus.LOSE) {
+      return
+    } else if (event.key == 'Backspace') {
       this.deleteLetter()
       return
     } else if (event.key == 'Enter') {
@@ -241,6 +249,7 @@ export class AppComponent {
 
 
   guess() {
+    console.log(this.gameState.getGameStatus() == GameStatus.LOSE)
     if (this.gameState.getGameStatus() == GameStatus.WIN) {
       this.presentResultDialog(true)
     } else if (this.gameState.getGameStatus() == GameStatus.LOSE) {
@@ -261,23 +270,38 @@ export class AppComponent {
               this.guesses.push(guess)
 
               if (this.currentGuess == correctWord) {
-                this.presentResultDialog(true)
+                this.setKeyboardColors()
                 this.gameState.setGameStatus(GameStatus.WIN)
+                console.log(this.gameState.getGameStatus())
+                this.gameState.addGuess(guess.getWord())
+                this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
+                this.gameState.setSolution(value["word"])
+                localStorage.setItem('gameState', JSON.stringify(this.gameState))
+                this.currentGuess = ''
+                this.presentResultDialog(true)
+                return
               }
 
               if (this.guesses.length == 6) {
-                this.presentResultDialog(false)
+                this.setKeyboardColors()
                 this.gameState.setGameStatus(GameStatus.LOSE)
+                this.gameState.addGuess(guess.getWord())
+                this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
+                this.gameState.setSolution(value["word"])
+                localStorage.setItem('gameState', JSON.stringify(this.gameState))
+                this.currentGuess = ''
+                this.presentResultDialog(false)
+                return 
               }
 
               this.setKeyboardColors()
-
               this.gameState.addGuess(guess.getWord())
               this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
               this.gameState.setSolution(value["word"])
               localStorage.setItem('gameState', JSON.stringify(this.gameState))
+
+   
               this.currentGuess = ''
-              console.log('api call')
             })
           } else {
             const message = `${this.currentGuess} is not a valid word`
@@ -294,21 +318,31 @@ export class AppComponent {
             var guess = new Guess(this.currentGuess, mapping)
             this.guesses.push(guess)
 
-            this.setKeyboardColors()
-
             if (this.currentGuess == solution!) {
-              this.presentResultDialog(true)
+              this.setKeyboardColors()
               this.gameState.setGameStatus(GameStatus.WIN)
+              this.gameState.addGuess(guess.getWord())
+              this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
+              localStorage.setItem('gameState', JSON.stringify(this.gameState))
+              this.currentGuess = ''
+              this.presentResultDialog(true)
+              return
             }
 
-            if (this.guesses.length == 6) {
-              this.presentResultDialog(false)
+            if (this.guesses.length == 6 && this.currentGuess != solution!) {
+              this.setKeyboardColors()
               this.gameState.setGameStatus(GameStatus.LOSE)
+              this.gameState.addGuess(guess.getWord())
+              this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
+              localStorage.setItem('gameState', JSON.stringify(this.gameState))
+              this.currentGuess = ''
+              this.presentResultDialog(false)
+              return
             }
 
+            this.setKeyboardColors()
             this.gameState.addGuess(guess.getWord())
             this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
-
             localStorage.setItem('gameState', JSON.stringify(this.gameState))
             this.currentGuess = ''
             //
@@ -318,7 +352,6 @@ export class AppComponent {
           }
         })
 
-        console.log('local storage')
       }
 
 
@@ -335,13 +368,22 @@ export class AppComponent {
   }
 
   presentResultDialog(solved: boolean) {
+    console.log(solved)
     if (this.dialog.openDialogs.length == 0) {
-      const dialogRef = this.dialog.open(ResultDialogComponent, {
-        data: {
-          guesses: this.guesses,
-          solved: solved
-        }
-      })
+      if(solved) {
+        this.dialog.open(WinGameDialogComponent, {
+          data: {
+            guesses: this.guesses,
+          }
+        })
+      } else {
+        this.dialog.open(LoseGameDialogComponent, {
+          data: {
+            guesses: this.guesses,
+          }
+        })
+      }
+     
     }
   }
 }

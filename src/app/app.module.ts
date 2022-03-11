@@ -13,13 +13,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { ResultDialogComponent } from './result-dialog/result-dialog.component';
+import { WinGameDialogComponent } from './win-game-dialog/win-game-dialog.component';
+import { LoseGameDialogComponent } from './lose-game-dialog/lose-game-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PopUpComponent,
     HelpDialogComponent,
-    ResultDialogComponent
+    ResultDialogComponent,
+    WinGameDialogComponent,
+    LoseGameDialogComponent
   ],
   imports: [
     BrowserModule,

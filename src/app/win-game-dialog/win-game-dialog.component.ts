@@ -3,33 +3,30 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Guess, GuessType } from '../guess.model';
 import { WordieService } from '../wordie.service';
 
-
 export interface DialogData {
   guesses: Guess[],
-  solved: boolean,
   word: string,
   id: number
 }
 
 @Component({
-  selector: 'app-result-dialog',
-  templateUrl: './result-dialog.component.html',
-  styleUrls: ['./result-dialog.component.css']
+  selector: 'app-win-game-dialog',
+  templateUrl: './win-game-dialog.component.html',
+  styleUrls: ['./win-game-dialog.component.css']
 })
-export class ResultDialogComponent implements OnInit {
+export class WinGameDialogComponent implements OnInit {
 
+  result = ''
+  todaysWord = ''
 
   constructor(private wordieService: WordieService, @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  result = ''
-  solved = false
-  todaysWord = ''
   
+
   ngOnInit(): void {
     this.wordieService.getTodaysWord().subscribe((value)=> {
       const todaysWord = value["word"]
       this.todaysWord = todaysWord
-      this.solved = this.data.solved
       const numberOfGuesses = this.data.guesses.length == 6 ? 'x' : this.data.guesses.length
       this.result = `Wordie ${numberOfGuesses}/6` + "\n\n"
       for(let guess of this.data.guesses) {

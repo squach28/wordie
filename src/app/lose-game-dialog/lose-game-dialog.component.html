@@ -1,0 +1,10 @@
+<div id="mainContainer"> 
+    <div>
+        <p>The wordie was {{todaysWord}}</p>
+    </div>   
+    <div id="result">
+        {{result}}</div>
+    <div>
+        <button id="copyButton" [cdkCopyToClipboard]="result" (click)="copy($event.target)">Copy</button>
+    </div>
+</div>
