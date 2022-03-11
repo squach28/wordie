@@ -69,7 +69,6 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.gameState.getGameStatus())
     let date = new Date()
     const today = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`
     if (localStorage.getItem('gameState') != null) { // check if the user already started a game and local storage has info
@@ -80,8 +79,6 @@ export class AppComponent {
         // set the properties of game state
         this.gameState.setSolution(previousState.solution)
         this.gameState.setGameStatus(previousState.gameStatus)
-        console.log(previousState.gameStatus)
-        console.log(this.gameState.getGameStatus())
         for (let i = 0; i < previousState.guesses.length; i++) {
           const guess = previousState.guesses[i]
           const guessTypes = previousState.gameGuessTypes[i]
@@ -123,7 +120,6 @@ export class AppComponent {
   // listens for keyboard strokes if user is on computer
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(this.gameState.getGameStatus())
     if(this.gameState.getGameStatus() == GameStatus.WIN || this.gameState.getGameStatus() == GameStatus.LOSE) {
       return
     } else if (event.key == 'Backspace') {
@@ -222,7 +218,6 @@ export class AppComponent {
       guessTypes.forEach((value: GuessType, key: number) => {
         let button = document.getElementById(word.charAt(key))
         let buttonStyle = button!.style.background
-        console.log(buttonStyle)
         if (buttonStyle == defaultColor) {
           if (value == GuessType.CORRECT) {
             button!.style.background = correctColor
@@ -234,7 +229,6 @@ export class AppComponent {
 
           }
         } else {
-          console.log(buttonStyle)
           if (buttonStyle == correctColor) {
             
           } else if(value == GuessType.WRONG_POSITION && (buttonStyle == incorrectColor || buttonStyle != correctColor)) {
@@ -249,7 +243,6 @@ export class AppComponent {
 
 
   guess() {
-    console.log(this.gameState.getGameStatus() == GameStatus.LOSE)
     if (this.gameState.getGameStatus() == GameStatus.WIN) {
       this.presentResultDialog(true)
     } else if (this.gameState.getGameStatus() == GameStatus.LOSE) {
@@ -272,7 +265,6 @@ export class AppComponent {
               if (this.currentGuess == correctWord) {
                 this.setKeyboardColors()
                 this.gameState.setGameStatus(GameStatus.WIN)
-                console.log(this.gameState.getGameStatus())
                 this.gameState.addGuess(guess.getWord())
                 this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
                 this.gameState.setSolution(value["word"])
@@ -310,7 +302,6 @@ export class AppComponent {
         })
       } else {
         const solution = this.gameState?.getSolution()
-        console.log(solution)
         this.wordieService.verifyWord(this.currentGuess).subscribe((result) => {
           let isValidWord = result["valid"]
           if (isValidWord) {
@@ -368,7 +359,6 @@ export class AppComponent {
   }
 
   presentResultDialog(solved: boolean) {
-    console.log(solved)
     if (this.dialog.openDialogs.length == 0) {
       if(solved) {
         this.dialog.open(WinGameDialogComponent, {
