@@ -21,3 +21,8 @@
     background: rgb(96, 172, 96);
     padding: 7px;
 }
+
+#copyButton:hover {
+    cursor: pointer;
+    background: rgb(61, 155, 61);
+}
