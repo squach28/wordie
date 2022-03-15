@@ -335,7 +335,7 @@ export class AppComponent {
                 return
               }
 
-              if (this.guesses.length == 6) {
+              if (this.guesses.length == 6 && this.currentGuess != correctWord) {
                 this.setKeyboardColors()
                 this.gameState.setGameStatus(GameStatus.LOSE)
                 this.gameState.addGuess(guess.getWord())

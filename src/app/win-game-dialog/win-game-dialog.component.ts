@@ -27,7 +27,7 @@ export class WinGameDialogComponent implements OnInit {
     this.wordieService.getTodaysWord().subscribe((value)=> {
       const todaysWord = value["word"]
       this.todaysWord = todaysWord
-      const numberOfGuesses = this.data.guesses.length == 6 ? 'x' : this.data.guesses.length
+      const numberOfGuesses = this.data.guesses.length
       this.result = `Wordie ${numberOfGuesses}/6` + "\n\n"
       for(let guess of this.data.guesses) {
         var row = ''
