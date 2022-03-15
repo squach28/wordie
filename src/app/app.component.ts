@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog'
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
-import { ResultDialogComponent } from './result-dialog/result-dialog.component';
 import { GameState, GameStatus } from './game-state.model';
 import { WinGameDialogComponent } from './win-game-dialog/win-game-dialog.component';
 import { LoseGameDialogComponent } from './lose-game-dialog/lose-game-dialog.component';
@@ -63,6 +62,7 @@ export class AppComponent {
   guesses: Guess[] = [] // list of guesses the user has made 
   dialogRef?: MatDialog // allows dialogs to pop up 
   gameState: GameState = new GameState() // holds info about the current board and game state
+  guessing: boolean = false 
 
   constructor(private wordieService: WordieService, public dialog: MatDialog) {
 
@@ -243,14 +243,21 @@ export class AppComponent {
 
 
   guess() {
-    if (this.gameState.getGameStatus() == GameStatus.WIN) {
+    if(this.guessing) {
+      return 
+    }
+    else if (this.gameState.getGameStatus() == GameStatus.WIN) {
       this.presentResultDialog(true)
+      this.guessing = false
     } else if (this.gameState.getGameStatus() == GameStatus.LOSE) {
       this.presentResultDialog(false)
+      this.guessing = false
     } else if (this.currentGuess.length < 6) {
       const message = 'Guess must be 6 letters long'
       this.openDialog(message)
+      this.guessing = false
     } else { // check with dictionary api if word exists 
+      this.guessing = true 
       const gameState = localStorage.getItem('gameState')
       if (gameState == null) {
         this.wordieService.verifyWord(this.currentGuess).subscribe((result) => {
@@ -271,6 +278,7 @@ export class AppComponent {
                 localStorage.setItem('gameState', JSON.stringify(this.gameState))
                 this.currentGuess = ''
                 this.presentResultDialog(true)
+                this.guessing = false
                 return
               }
 
@@ -283,6 +291,7 @@ export class AppComponent {
                 localStorage.setItem('gameState', JSON.stringify(this.gameState))
                 this.currentGuess = ''
                 this.presentResultDialog(false)
+                this.guessing = false
                 return 
               }
 
@@ -291,13 +300,15 @@ export class AppComponent {
               this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
               this.gameState.setSolution(value["word"])
               localStorage.setItem('gameState', JSON.stringify(this.gameState))
-
-   
               this.currentGuess = ''
+              this.guessing = false
+              return 
             })
           } else {
             const message = `${this.currentGuess} is not a valid word`
             this.openDialog(message)
+            this.guessing = false
+            return
           }
         })
       } else {
@@ -317,6 +328,7 @@ export class AppComponent {
               localStorage.setItem('gameState', JSON.stringify(this.gameState))
               this.currentGuess = ''
               this.presentResultDialog(true)
+              this.guessing = false
               return
             }
 
@@ -328,6 +340,7 @@ export class AppComponent {
               localStorage.setItem('gameState', JSON.stringify(this.gameState))
               this.currentGuess = ''
               this.presentResultDialog(false)
+              this.guessing = false
               return
             }
 
@@ -336,10 +349,14 @@ export class AppComponent {
             this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
             localStorage.setItem('gameState', JSON.stringify(this.gameState))
             this.currentGuess = ''
-            //
+            this.guessing = false
+            return
+            
           } else {
             const message = `${this.currentGuess} is not a valid word`
             this.openDialog(message)
+            this.guessing = false
+            return 
           }
         })
 

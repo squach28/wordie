@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
-import { ResultDialogComponent } from './result-dialog/result-dialog.component';
 import { WinGameDialogComponent } from './win-game-dialog/win-game-dialog.component';
 import { LoseGameDialogComponent } from './lose-game-dialog/lose-game-dialog.component';
 
@@ -21,7 +20,6 @@ import { LoseGameDialogComponent } from './lose-game-dialog/lose-game-dialog.com
     AppComponent,
     PopUpComponent,
     HelpDialogComponent,
-    ResultDialogComponent,
     WinGameDialogComponent,
     LoseGameDialogComponent
   ],
