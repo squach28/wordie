@@ -63,12 +63,20 @@ export class AppComponent {
   dialogRef?: MatDialog // allows dialogs to pop up 
   gameState: GameState = new GameState() // holds info about the current board and game state
   guessing: boolean = false 
+  keyboardColors: any = {
+    'a': null, 'b': null, 'c': null, 'd': null, 'e': null,
+    'f': null, 'g': null, 'h': null, 'i': null, 'j': null,
+    'k': null, 'l': null, 'm': null, 'n': null, 'o': null,
+    'p': null, 'q': null, 'r': null, 's': null, 't': null,
+    'u': null, 'v': null, 'w': null, 'x': null, 'y': null, 'z': null
+  }
 
   constructor(private wordieService: WordieService, public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
+    console.log(this.keyboardColors)
     let date = new Date()
     const today = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`
     if (localStorage.getItem('gameState') != null) { // check if the user already started a game and local storage has info
@@ -169,18 +177,26 @@ export class AppComponent {
       }
     }
 
-    for (let i = 0; i < word.length; i++) {
+    for(let i = 0; i < word.length; i++) {
       let letter = guess.charAt(i)
-      if (word.charAt(i) == letter) {
+      if(word.charAt(i) == letter) {
         guessTypeMapping.set(i, GuessType.CORRECT)
         charTracker.set(letter, charTracker.get(letter)! - 1)
-      } else if (word.includes(letter) && charTracker.get(letter)! > 0) {
+      }  
+    }
+    console.log(charTracker)
+    for (let i = 0; i < word.length; i++) {
+      let letter = guess.charAt(i)
+      if (word.includes(letter) && charTracker.get(letter)! > 0) {
         guessTypeMapping.set(i, GuessType.WRONG_POSITION)
         charTracker.set(letter, charTracker.get(letter)! - 1)
+      } else if(guessTypeMapping.get(i) == GuessType.CORRECT) {
+        
       } else {
         guessTypeMapping.set(i, GuessType.INCORRECT)
       }
     }
+    console.log(guessTypeMapping)
     return guessTypeMapping
   }
 
@@ -208,36 +224,73 @@ export class AppComponent {
 
   // sets the keyboard's colors 
   setKeyboardColors() {
-    const defaultColor = ''
-    const correctColor = 'rgb(117, 187, 117)'
-    const wrongPositionColor = 'rgb(196, 196, 118)'
-    const incorrectColor = 'gray'
+    const guessTypeMapping = {
+      'correct': 1,
+      'wrongPosition': 0,
+      'incorrect': -1
+    }
+
     for (let guess of this.guesses) {
       let guessTypes = guess.getGuessTypes()
       let word = guess.getWord()
       guessTypes.forEach((value: GuessType, key: number) => {
         let button = document.getElementById(word.charAt(key))
-        let buttonStyle = button!.style.background
-        if (buttonStyle == defaultColor) {
-          if (value == GuessType.CORRECT) {
-            button!.style.background = correctColor
-          } else if (value == GuessType.WRONG_POSITION) {
-            button!.style.background = wrongPositionColor
-          } else if (value == GuessType.INCORRECT) {
-            button!.style.background = incorrectColor
-          } else {
-
+        let letter = word.charAt(key)
+        if(this.keyboardColors[letter] == null) {
+          button!.style.background = this.getGuessTypeColor(value)
+          switch(value) {
+            case GuessType.CORRECT:
+              this.keyboardColors[letter] = guessTypeMapping['correct']
+              break
+            case GuessType.WRONG_POSITION:
+              this.keyboardColors[letter] = guessTypeMapping['wrongPosition']
+              break
+            case GuessType.INCORRECT:
+              this.keyboardColors[letter] = guessTypeMapping['incorrect']
+              break
+            default:
+              this.keyboardColors[letter] = null
+              break
           }
         } else {
-          if (buttonStyle == correctColor) {
-            
-          } else if(value == GuessType.WRONG_POSITION && (buttonStyle == incorrectColor || buttonStyle != correctColor)) {
-            button!.style.background = wrongPositionColor
-          } else {
-            button!.style.background = incorrectColor
+          var guessTypeValue: number = -5
+          switch(value) {
+            case GuessType.CORRECT:
+              guessTypeValue = guessTypeMapping['correct']
+              break
+            case GuessType.WRONG_POSITION:
+              guessTypeValue = guessTypeMapping['wrongPosition']
+              break
+            case GuessType.INCORRECT:
+              guessTypeValue = guessTypeMapping['incorrect']
+              break
+          }
+          console.log(letter + " " + this.keyboardColors[letter] + " vs " + guessTypeValue)
+          if(this.keyboardColors[letter] < guessTypeValue) {
+            console.log(this.getGuessTypeColor(value))
+            button!.style.background = this.getGuessTypeColor(value)
+            this.keyboardColors[letter] = guessTypeValue
           }
         }
       })
+    }
+
+  }
+
+  // function that takes in a GuessType and returns the color that the keyboard should be set to
+  getGuessTypeColor(guessType: GuessType): string {
+    const defaultColor = ''
+    const correctColor = 'rgb(117, 187, 117)'
+    const wrongPositionColor = 'rgb(196, 196, 118)'
+    const incorrectColor = 'gray'
+    if(guessType == GuessType.CORRECT) {
+      return correctColor
+    } else if(guessType == GuessType.WRONG_POSITION) {
+      return wrongPositionColor
+    } else if(guessType == GuessType.INCORRECT) {
+      return incorrectColor
+    } else {
+      return defaultColor
     }
   }
 
