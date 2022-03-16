@@ -76,7 +76,6 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.keyboardColors)
     let date = new Date()
     const today = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`
     if (localStorage.getItem('gameState') != null) { // check if the user already started a game and local storage has info
@@ -184,7 +183,6 @@ export class AppComponent {
         charTracker.set(letter, charTracker.get(letter)! - 1)
       }  
     }
-    console.log(charTracker)
     for (let i = 0; i < word.length; i++) {
       let letter = guess.charAt(i)
       if (word.includes(letter) && charTracker.get(letter)! > 0) {
@@ -196,7 +194,6 @@ export class AppComponent {
         guessTypeMapping.set(i, GuessType.INCORRECT)
       }
     }
-    console.log(guessTypeMapping)
     return guessTypeMapping
   }
 
@@ -265,9 +262,7 @@ export class AppComponent {
               guessTypeValue = guessTypeMapping['incorrect']
               break
           }
-          console.log(letter + " " + this.keyboardColors[letter] + " vs " + guessTypeValue)
           if(this.keyboardColors[letter] < guessTypeValue) {
-            console.log(this.getGuessTypeColor(value))
             button!.style.background = this.getGuessTypeColor(value)
             this.keyboardColors[letter] = guessTypeValue
           }
@@ -429,6 +424,7 @@ export class AppComponent {
   }
 
   presentResultDialog(solved: boolean) {
+    console.log(this.guesses)
     if (this.dialog.openDialogs.length == 0) {
       if(solved) {
         this.dialog.open(WinGameDialogComponent, {
