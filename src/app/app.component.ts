@@ -62,7 +62,8 @@ export class AppComponent {
   guesses: Guess[] = [] // list of guesses the user has made 
   dialogRef?: MatDialog // allows dialogs to pop up 
   gameState: GameState = new GameState() // holds info about the current board and game state
-  guessing: boolean = false 
+  guessing: boolean = false // checks if the user is currently guessing a word
+  // object that keeps track of what colors the keyboard should be 
   keyboardColors: any = {
     'a': null, 'b': null, 'c': null, 'd': null, 'e': null,
     'f': null, 'g': null, 'h': null, 'i': null, 'j': null,
@@ -127,12 +128,13 @@ export class AppComponent {
   // listens for keyboard strokes if user is on computer
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if(this.gameState.getGameStatus() == GameStatus.WIN || this.gameState.getGameStatus() == GameStatus.LOSE) {
+    if(this.gameState.getGameStatus() == GameStatus.WIN || this.gameState.getGameStatus() == GameStatus.LOSE) { 
+      // do nothing if the game is already completed
       return
-    } else if (event.key == 'Backspace') {
+    } else if (event.key == 'Backspace') { // delete letter if backspace is entered
       this.deleteLetter()
       return
-    } else if (event.key == 'Enter') {
+    } else if (event.key == 'Enter') { // call guess function is enter is pressed
       this.guess()
       return
     } else if (event.key.length == 1 && event.key >= 'a' && event.key <= 'z') {
@@ -141,7 +143,7 @@ export class AppComponent {
     } else if (event.key.length == 1 && event.key >= 'A' && event.key <= 'Z') {
       this.onKeyPress(event.key)
       return
-    } else {
+    } else { // do nothing if unknown keys are entered
       return
     }
   }
@@ -176,6 +178,7 @@ export class AppComponent {
       }
     }
 
+    // look through letters and set guess type as correct if in the right spot
     for(let i = 0; i < word.length; i++) {
       let letter = guess.charAt(i)
       if(word.charAt(i) == letter) {
@@ -183,13 +186,15 @@ export class AppComponent {
         charTracker.set(letter, charTracker.get(letter)! - 1)
       }  
     }
+    
+    // look through letters and check if guess type is wrong position or incorrect
     for (let i = 0; i < word.length; i++) {
       let letter = guess.charAt(i)
       if (word.includes(letter) && charTracker.get(letter)! > 0) {
         guessTypeMapping.set(i, GuessType.WRONG_POSITION)
         charTracker.set(letter, charTracker.get(letter)! - 1)
-      } else if(guessTypeMapping.get(i) == GuessType.CORRECT) {
-        
+      } else if(guessTypeMapping.get(i) == GuessType.CORRECT) { 
+        // do nothing if the guess type is correct; don't overwrite
       } else {
         guessTypeMapping.set(i, GuessType.INCORRECT)
       }
@@ -221,6 +226,8 @@ export class AppComponent {
 
   // sets the keyboard's colors 
   setKeyboardColors() {
+    // map that shows priority of what colors to set 
+    // correct > wrongPosition > incorrect
     const guessTypeMapping = {
       'correct': 1,
       'wrongPosition': 0,
@@ -233,7 +240,7 @@ export class AppComponent {
       guessTypes.forEach((value: GuessType, key: number) => {
         let button = document.getElementById(word.charAt(key))
         let letter = word.charAt(key)
-        if(this.keyboardColors[letter] == null) {
+        if(this.keyboardColors[letter] == null) { // letter has been untouched and can set it to the designated color
           button!.style.background = this.getGuessTypeColor(value)
           switch(value) {
             case GuessType.CORRECT:
@@ -249,7 +256,7 @@ export class AppComponent {
               this.keyboardColors[letter] = null
               break
           }
-        } else {
+        } else { // letter is set; compare which guess type is greater 
           var guessTypeValue: number = -5
           switch(value) {
             case GuessType.CORRECT:
@@ -262,7 +269,7 @@ export class AppComponent {
               guessTypeValue = guessTypeMapping['incorrect']
               break
           }
-          if(this.keyboardColors[letter] < guessTypeValue) {
+          if(this.keyboardColors[letter] < guessTypeValue) { // if the new guess type has higher priority, set it
             button!.style.background = this.getGuessTypeColor(value)
             this.keyboardColors[letter] = guessTypeValue
           }
@@ -291,7 +298,7 @@ export class AppComponent {
 
 
   guess() {
-    if(this.guessing) {
+    if(this.guessing) { // user is guessing; do nothing
       return 
     }
     else if (this.gameState.getGameStatus() == GameStatus.WIN) {
@@ -305,17 +312,17 @@ export class AppComponent {
       this.openDialog(message)
       this.guessing = false
     } else { // check with dictionary api if word exists 
-      this.guessing = true 
+      this.guessing = true // user is guessing
       const gameState = localStorage.getItem('gameState')
-      if (gameState == null) {
-        this.wordieService.verifyWord(this.currentGuess).subscribe((result) => {
+      if (gameState == null) { // check if gameState is present in local storage; if yes -> fetch answer from local storage
+        this.wordieService.verifyWord(this.currentGuess).subscribe((result) => { // validate word
           let isValidWord = result["valid"]
-          if (isValidWord) {
+          if (isValidWord) { // word is valid -> compare the guess with the correct word
             this.wordieService.getTodaysWord().subscribe((value) => {
-              let correctWord = value["word"]
-              var mapping = this.calculateGuessResult(correctWord, this.currentGuess)
-              var guess = new Guess(this.currentGuess, mapping)
-              this.guesses.push(guess)
+              let correctWord = value["word"] // store the correct word
+              var mapping = this.calculateGuessResult(correctWord, this.currentGuess) // create mapping of the index and guess type
+              var guess = new Guess(this.currentGuess, mapping) // create new guess object 
+              this.guesses.push(guess) 
 
               if (this.currentGuess == correctWord) {
                 this.setKeyboardColors()
@@ -344,6 +351,7 @@ export class AppComponent {
               }
 
               this.setKeyboardColors()
+              // adjust local storage to account for the new guess made
               this.gameState.addGuess(guess.getWord())
               this.gameState.addGameGuessType(Array.from(guess.getGuessTypes()))
               this.gameState.setSolution(value["word"])
@@ -352,14 +360,14 @@ export class AppComponent {
               this.guessing = false
               return 
             })
-          } else {
+          } else { // word is invalid 
             const message = `${this.currentGuess} is not a valid word`
             this.openDialog(message)
             this.guessing = false
             return
           }
         })
-      } else {
+      } else { // use solution from local storage
         const solution = this.gameState?.getSolution()
         this.wordieService.verifyWord(this.currentGuess).subscribe((result) => {
           let isValidWord = result["valid"]
@@ -415,6 +423,7 @@ export class AppComponent {
     }
   }
 
+  // presents the help dialog when user presses on help icon 
   presentHelpDialog() {
     if (this.dialog.openDialogs.length == 0) {
       const dialogRef = this.dialog.open(HelpDialogComponent, {
@@ -423,16 +432,16 @@ export class AppComponent {
     }
   }
 
+  // presents dialog based on whether the user won or lost
   presentResultDialog(solved: boolean) {
-    console.log(this.guesses)
-    if (this.dialog.openDialogs.length == 0) {
-      if(solved) {
+    if (this.dialog.openDialogs.length == 0) { // check that there are no present dialogs
+      if(solved) { // solved = user won -> present WinGameDialogComponent
         this.dialog.open(WinGameDialogComponent, {
           data: {
             guesses: this.guesses,
           }
         })
-      } else {
+      } else { // else -> user lost -> presentLoseGameDialogComponent
         this.dialog.open(LoseGameDialogComponent, {
           data: {
             guesses: this.guesses,
