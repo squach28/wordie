@@ -190,7 +190,7 @@ export class AppComponent {
     // look through letters and check if guess type is wrong position or incorrect
     for (let i = 0; i < word.length; i++) {
       let letter = guess.charAt(i)
-      if (word.includes(letter) && charTracker.get(letter)! > 0) {
+      if (word.includes(letter) && charTracker.get(letter)! > 0 && guessTypeMapping.get(i) != GuessType.CORRECT) {
         guessTypeMapping.set(i, GuessType.WRONG_POSITION)
         charTracker.set(letter, charTracker.get(letter)! - 1)
       } else if(guessTypeMapping.get(i) == GuessType.CORRECT) { 
