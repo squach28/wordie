@@ -31,24 +31,24 @@ export class LoseGameDialogComponent implements OnInit {
       const numberOfGuesses = this.data.guesses.length == 6 ? 'x' : this.data.guesses.length
       this.result = `Wordie ${numberOfGuesses}/6` + "\n\n"
       for(let guess of this.data.guesses) {
-        var row = ''
+        var emojiArr: string[] = ['', '', '', '', '', ''] // stores the result emojis of the guesss
         for(let guessTypeEntry of guess.getGuessTypes().entries()) {
+          const index = guessTypeEntry[0]
           const guessType = guessTypeEntry[1]
           if(guessType == GuessType.CORRECT) {
-            row += '🟩 '
+            emojiArr[index] = '🟩 '
           } else if(guessType == GuessType.WRONG_POSITION) {
-            row += '🟨 ' 
+            emojiArr[index] = '🟨 '
           } else if(guessType == GuessType.INCORRECT) {
-            row += '⬛ '
+            emojiArr[index] = '⬛ '
           } else {
   
           }
         }
-        
-        this.result += row + "\n"
+
+        this.result += emojiArr.join('') + "\n"
   
       }
-      console.log(this.result)
   
     })
 
