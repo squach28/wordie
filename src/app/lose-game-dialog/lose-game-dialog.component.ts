@@ -28,7 +28,7 @@ export class LoseGameDialogComponent implements OnInit {
     this.wordieService.getTodaysWord().subscribe((value)=> {
       const todaysWord = value["word"]
       this.todaysWord = todaysWord
-      const numberOfGuesses = this.data.guesses.length == 6 ? 'x' : this.data.guesses.length
+      const numberOfGuesses = 'x'
       this.result = `Wordie ${numberOfGuesses}/6` + "\n\n"
       for(let guess of this.data.guesses) {
         var emojiArr: string[] = ['', '', '', '', '', ''] // stores the result emojis of the guesss
