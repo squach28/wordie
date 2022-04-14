@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, HostListener, } from '@angular/core';
 import { WordieService } from './wordie.service';
 import { Guess, GuessType } from './guess.model';
 import { MatDialog } from '@angular/material/dialog'
@@ -83,6 +83,10 @@ export class AppComponent {
       let previousState = JSON.parse(localStorage.getItem('gameState')!)
       if (previousState.date != today) { // check if the game state is outdated
         localStorage.removeItem('gameState')
+        this.wordieService.getTodaysWord().subscribe((solution) => {
+          this.gameState.setSolution(solution['word'])
+          localStorage.setItem('gameState', JSON.stringify(this.gameState))
+        })
       } else {
         // set the properties of game state
         this.gameState.setSolution(previousState.solution)
@@ -122,6 +126,12 @@ export class AppComponent {
         // set keyboard colors 
         this.setKeyboardColors()
       }
+    } else {
+      localStorage.removeItem('gameState')
+      this.wordieService.getTodaysWord().subscribe((solution) => {
+        this.gameState.setSolution(solution['word'])
+        localStorage.setItem('gameState', JSON.stringify(this.gameState))
+      })
     }
   }
 
