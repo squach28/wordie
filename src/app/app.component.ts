@@ -371,7 +371,7 @@ export class AppComponent {
               return 
             })
           } else { // word is invalid 
-            const message = `${this.currentGuess} is not a valid word`
+            const message = `${this.currentGuess} is not a valid word.`
             this.openDialog(message)
             this.guessing = false
             return
@@ -419,7 +419,7 @@ export class AppComponent {
             return
             
           } else {
-            const message = `${this.currentGuess} is not a valid word`
+            const message = `${this.currentGuess} is not a valid word.`
             this.openDialog(message)
             this.guessing = false
             return 
