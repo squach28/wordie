@@ -47,6 +47,7 @@ mat-icon {
     justify-content: center;
     gap: 10px;  
     flex-grow: 1;
+    margin-bottom: 20px;
 }
 
 .row {
